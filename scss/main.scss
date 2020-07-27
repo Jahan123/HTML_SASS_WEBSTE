@@ -1,0 +1,182 @@
+$primary-color: rgb(71, 66, 67);
+$font-color: white;
+$secondary-font-color: rgb(253, 255, 107);
+@mixin getTransition {
+  transition: all 0.5s ease-out;
+}
+@mixin secondary-heading {
+  span.secondary-heading {
+    color: $secondary-font-color;
+  }
+}
+@function set-Text-color($color) {
+  @if (lightness($color) > 40) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+@import "./navbar";
+body {
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(
+      to right,
+      rgba($primary-color, 0.9),
+      rgba($primary-color, 0.7)
+    ),
+    url("../img/background.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0px;
+  color: $font-color;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: border-box;
+}
+
+button {
+  padding: 7px;
+  display: block;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  border: none;
+  color: set-Text-color($primary-color);
+}
+
+#home {
+  width: 100%;
+  margin-top: 20vh;
+  padding-left: 30px;
+  .lg-heading {
+    h1 {
+      font-weight: normal;
+      font-size: 6rem;
+      margin: 0px;
+      color: white;
+      @include secondary-heading();
+    }
+  }
+  .about-me {
+    h2 {
+      font-weight: 400;
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    }
+  }
+  .social-icons {
+    a {
+      display: inline-block;
+      padding: 7px;
+      font-size: 25px;
+      color: set-Text-color($primary-color);
+      &:hover {
+        color: $secondary-font-color;
+        @include getTransition();
+      }
+    }
+  }
+}
+
+.bio {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-areas: "portfolio description";
+  .portfolio {
+    img {
+      width: 70%;
+      height: auto;
+      border-radius: 50%;
+      border: 2px solid $secondary-font-color;
+    }
+    grid-area: portfolio;
+  }
+  .description {
+    grid-area: description;
+  }
+}
+
+.job {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 5px;
+  margin-right: 10px;
+  &-1,
+  &-2,
+  &-3 {
+    background: darken($color: $primary-color, $amount: 10);
+    padding: 10px;
+    border-bottom: 5px solid $secondary-font-color;
+    border-radius: 5px;
+  }
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  &-1,
+  &-2,
+  &-3,
+  &-4,
+  &-5 {
+    border: 2px solid set-Text-color($primary-color);
+    img {
+      width: 100%;
+      height: auto;
+      opacity: 1;
+      &:hover {
+        opacity: 0.6;
+        cursor: pointer;
+      }
+    }
+    .description {
+      .light-btn {
+        @extend button;
+        background: lighten($color: $primary-color, $amount: 40);
+      }
+      .dark-btn {
+        @extend button;
+        background: darken($primary-color, $amount: 30);
+      }
+    }
+  }
+}
+
+.contacts {
+  width: 100%;
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: repeat(3, 1fr);
+  h2 {
+    border: set-Text-color($primary-color) 2px solid;
+    padding: 1.5rem 2.5rem;
+    @include secondary-heading();
+    @include getTransition();
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .contacts {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .bio {
+    grid-template-columns: 100%;
+    justify-items: center;
+    grid-template-areas:
+      "portfolio"
+      "description";
+  }
+  .job {
+    grid-template-columns: 100%;
+    grid-row-gap: 5px;
+  }
+}

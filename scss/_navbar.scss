@@ -1,0 +1,109 @@
+@mixin getFlexCenterItem($value) {
+    display: flex;
+    flex-flow: $value wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin anchorItemStyle {
+    a {
+        text-decoration: none;
+        padding: 10px;
+        color: white;
+        font-size: 1.5rem;
+        &:hover {
+            color: $secondary-font-color;
+        }
+    }
+}
+
+.active {
+    height: 100% !important;
+}
+
+.btn-active {
+    transform: rotate(720deg);
+
+    .head-bar1 {
+        transform: rotate(45deg) translate(1px, 5px);
+    }
+    .head-bar2 {
+        opacity: 0;
+    }
+    .head-bar3 {
+        transform: rotate(-45deg) translate(3px, -7px);
+    }
+}
+
+.header {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    .head-btn {
+        width: 30px;
+        height: 10px;
+        position: fixed;
+        cursor: pointer;
+        z-index: 1;
+        right: 1rem;
+        top: 1rem;
+        @include getTransition();
+        .head-bar1,
+        .head-bar2,
+        .head-bar3 {
+            width: 100%;
+            height: 33.33%;
+            background: white;
+            margin-bottom: 2px;
+        }
+    }
+    .navbar {
+        height: 100vh;
+        @include getFlexCenterItem(row);
+        .left-potrait {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 50%;
+            height: 0%;
+            overflow: hidden;
+            @include getFlexCenterItem(row);
+            @include getTransition();
+            background: rgba($primary-color, 1);
+            img {
+                width: 60%;
+                height: auto;
+                border-radius: 50%;
+                border: 2px solid $secondary-font-color;
+            }
+        }
+        .right-navbar {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 50%;
+            height: 0%;
+            overflow: hidden;
+            @include getFlexCenterItem(column);
+            background: rgba($primary-color, 0.9);
+            @include anchorItemStyle();
+            @include getTransition();
+            .navbar-link {
+                transform: translate3d(680px, 0, 0);
+                @include getTransition();
+                &.open {
+                    transform: translate3d(0, 0, 0);
+                    @include getTransition();
+                }
+            }
+        }
+    }
+}
+
+@for $x from 1 through 4 {
+    .navbar-link:nth-child(#{$x}) {
+        transition-delay: ($x * 0.1s) !important;
+    }
+}
